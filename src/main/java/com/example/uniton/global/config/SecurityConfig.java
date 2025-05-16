@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // CSRF 비활성화(현재는 API서버라서)
+                // CSRF 비활성화
                 .csrf(AbstractHttpConfigurer::disable)
                 // CORS 비활성화
                 .cors(AbstractHttpConfigurer::disable)
@@ -41,11 +41,10 @@ public class SecurityConfig {
                 )
 
                 // 회원가입, 로그인 외에는 인증 후에만 호출 가능
-                /*.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/persons/signup", "/api/persons/login").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/shows").hasRole("ADMIN")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/members/signup", "/api/members/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
-                )*/
+                )
 
                 // JWT 검증 필터 삽입
                 .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class
