@@ -1,8 +1,8 @@
 HELP.md
 .gradle
 application.properties
-application.yml
 *.log
+/logs
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
