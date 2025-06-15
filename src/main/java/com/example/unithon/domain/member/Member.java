@@ -14,23 +14,19 @@ public class Member {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String loginId;
+    private String email;
 
     @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
-    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
     @Builder
-    private Member(String loginId, String password, String email, Role role) {
-        this.loginId = loginId;
-        this.password = password;
+    private Member(String email, String password,Role role) {
         this.email = email;
+        this.password = password;
         this.role = role;
     }
 

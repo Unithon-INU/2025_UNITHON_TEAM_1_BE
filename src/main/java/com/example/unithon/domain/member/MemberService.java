@@ -26,38 +26,41 @@ public class MemberService {
     //회원가입
     @Transactional
     public SignupResDto signup(SignupReqDto signupRequest) {
-        if (memberRepository.existsByLoginId(signupRequest.getLoginId())) {
-            throw new CustomException(ErrorCode.DUPLICATE_LOGIN_ID);
+        if (memberRepository.existsByEmail(signupRequest.getEmail())) {
+            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
+        }
+        // 비밀번호 일치 확인
+        if (!signupRequest.getPassword().equals(signupRequest.getConfirmPassword())) {
+            throw new CustomException(ErrorCode.PASSWORD_MISMATCH);
         }
 
         Member member = Member.builder()
-                .loginId(signupRequest.getLoginId())
                 .email(signupRequest.getEmail())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
                 .role(Role.USER) // USER 권한 부여
                 .build();
         memberRepository.save(member);
-        log.info("[회원가입 성공] loginId: {}", member.getLoginId());
+        log.info("[회원가입 성공] email: {}", member.getEmail());
         return SignupResDto.from(member);
     }
 
     //로그인
     @Transactional
     public LoginResDto login(LoginReqDto loginRequest) {
-        log.info("[로그인 시도] loginId: {}", loginRequest.getLoginId());
-        Member member = memberRepository.findByLoginId(loginRequest.getLoginId())
+        log.info("[로그인 시도] email: {}", loginRequest.getEmail());
+        Member member = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> {
-                    log.warn("[로그인 실패] 존재하지 않는 ID: {}", loginRequest.getLoginId());
-                    return new CustomException(ErrorCode.ID_NOT_FOUND);
+                    log.warn("[로그인 실패] 존재하지 않는 email: {}", loginRequest.getEmail());
+                    return new CustomException(ErrorCode.EMAIL_NOT_FOUND);
                 });
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
-            log.warn("[로그인 실패] 비밀번호 불일치 - loginId: {}", loginRequest.getLoginId());
+            log.warn("[로그인 실패] 비밀번호 불일치 - email: {}", loginRequest.getEmail());
             throw new CustomException(ErrorCode.UNAUTHORIZED_LOGIN);
         }
         // 토큰 생성
-        String token = jwtTokenProvider.generateAccessToken(member.getLoginId());
-        log.info("[로그인 성공] loginId: {}", member.getLoginId());
+        String token = jwtTokenProvider.generateAccessToken(member.getEmail());
+        log.info("[로그인 성공] email: {}", member.getEmail());
         return LoginResDto.from(member, token);
     }
 }

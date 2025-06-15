@@ -6,20 +6,20 @@ import lombok.Getter;
 
 @Getter
 public class LoginResDto {
-    private final Long loginId;
+    private final String email;
     private final String accessToken;
     private final String refreshToken;
 
     @Builder
-    private LoginResDto(Long loginId, String name, String accessToken, String refreshToken) {
-        this.loginId = loginId;
+    private LoginResDto(String email, String accessToken, String refreshToken) {
+        this.email = email;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
 
     public static LoginResDto from(Member member, String token) {
         return LoginResDto.builder()
-                .loginId(member.getId())
+                .email(member.getEmail())
                 .accessToken(token)
                 .refreshToken(token)
                 .build();

@@ -7,18 +7,18 @@ import lombok.Getter;
 @Getter
 public class SignupResDto {
     private final Long id;
-    private final String loginId;
+    private final String email;
 
     @Builder
-    private SignupResDto(Long id, String loginId) {
+    private SignupResDto(Long id, String email) {
         this.id = id;
-        this.loginId = loginId;
+        this.email = email;
     }
 
     public static SignupResDto from(Member member) {
         return SignupResDto.builder()
                 .id(member.getId())
-                .loginId(member.getLoginId())
+                .email(member.getEmail())
                 .build();
     }
 }

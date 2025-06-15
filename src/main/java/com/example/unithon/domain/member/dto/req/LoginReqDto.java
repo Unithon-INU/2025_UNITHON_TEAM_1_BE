@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 public class LoginReqDto {
 
-    @NotBlank(message = "ID를 입력해주세요.")
-    @Schema(example = "test")
-    private String loginId;
+    @NotBlank(message = "email을 입력해주세요.")
+    @Schema(example = "test@naver.com")
+    private String email;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Schema(example = "test123")

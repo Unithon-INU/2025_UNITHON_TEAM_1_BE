@@ -10,10 +10,12 @@ import static org.springframework.http.HttpStatus.*;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    DUPLICATE_LOGIN_ID(CONFLICT, "USER-001", "이미 존재하는 ID입니다."),
-    UNAUTHORIZED_LOGIN(UNAUTHORIZED, "USER-002", "ID 혹은 비밀번호가 일치하지 않습니다."),
-    ID_NOT_FOUND(NOT_FOUND, "USER-003", "존재하지 않는 ID입니다."),
-    FORBIDDEN_PERMISSION(FORBIDDEN, "USER-004", "권한이 없습니다.");
+    DUPLICATE_EMAIL(CONFLICT, "USER-001", "이미 존재하는 email 입니다."),
+    UNAUTHORIZED_LOGIN(UNAUTHORIZED, "USER-002", "email 혹은 비밀번호가 일치하지 않습니다."),
+    EMAIL_NOT_FOUND(NOT_FOUND, "USER-003", "존재하지 않는 email입니다."),
+    FORBIDDEN_PERMISSION(FORBIDDEN, "USER-004", "권한이 없습니다."),
+    PASSWORD_MISMATCH(BAD_REQUEST, "USER-005", "비밀번호가 일치하지 않습니다.");
+
 
     private final HttpStatus httpStatus;
     private final String code;				// USER-001
