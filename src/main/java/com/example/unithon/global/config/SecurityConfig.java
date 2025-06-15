@@ -13,11 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -29,17 +24,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
+                // CORS는 WebMvcConfigurer에서 처리
+                .cors(AbstractHttpConfigurer::disable)
 
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 // CSRF 비활성화
                 .csrf(AbstractHttpConfigurer::disable)
 
                 // 세션을 사용 x -> STATELESS
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // 회원가입, 로그인 외에는 인증 후에만 호출 가능
+                // 인증 설정
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("OPTIONS", "/**").permitAll()
                         .requestMatchers(
                                 "/api/members/signup",
                                 "/api/members/login",
@@ -49,7 +45,9 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/v3/api-docs",
                                 "/webjars/**",
-                                "/actuator/**"
+                                "/actuator/**",
+                                "/favicon.ico",
+                                "/error"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -57,23 +55,6 @@ public class SecurityConfig {
                 // JWT 검증 필터 삽입
                 .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-
-        corsConfiguration.setAllowedOriginPatterns(List.of("http://localhost:3000", "http://localhost:8080", "http://43.203.125.32:8080"));
-        corsConfiguration.setExposedHeaders(List.of("*"));
-        corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
-
-        return source;
     }
 
     @Bean
