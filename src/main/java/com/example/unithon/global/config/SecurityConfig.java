@@ -40,7 +40,14 @@ public class SecurityConfig {
 
                 // 회원가입, 로그인 외에는 인증 후에만 호출 가능
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/members/signup", "/api/members/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(
+                                "/api/members/signup",
+                                "/api/members/login",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
 
@@ -53,7 +60,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.setAllowedOriginPatterns(List.of("http://localhost:8080", "http://localhost:3000","http://http://43.203.125.32:8080"));
+        corsConfiguration.setAllowedOriginPatterns(List.of("http://localhost:8080", "http://localhost:3000","http://43.203.125.32:8080"));
         corsConfiguration.setExposedHeaders(List.of("*"));
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
