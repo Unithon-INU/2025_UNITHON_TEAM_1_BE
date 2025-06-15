@@ -41,6 +41,7 @@ public class MemberService {
         Member member = Member.builder()
                 .email(signupRequest.getEmail())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
+                .nickname(signupRequest.getNickname())
                 .role(Role.USER) // USER 권한 부여
                 .build();
         memberRepository.save(member);

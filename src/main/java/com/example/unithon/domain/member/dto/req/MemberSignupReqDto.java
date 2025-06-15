@@ -8,6 +8,10 @@ import lombok.Getter;
 @Getter
 public class MemberSignupReqDto {
 
+    @NotBlank(message = "닉네임을 입력해주세요.")
+    @Schema(example = "테스트")
+    private String nickname;
+
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "올바른 이메일 형식을 입력해주세요.")
     @Schema(example = "test@naver.com")
