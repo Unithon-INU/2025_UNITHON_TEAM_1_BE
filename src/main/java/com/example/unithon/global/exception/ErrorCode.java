@@ -14,7 +14,9 @@ public enum ErrorCode {
     UNAUTHORIZED_LOGIN(UNAUTHORIZED, "USER-002", "email 혹은 비밀번호가 일치하지 않습니다."),
     EMAIL_NOT_FOUND(NOT_FOUND, "USER-003", "존재하지 않는 email입니다."),
     FORBIDDEN_PERMISSION(FORBIDDEN, "USER-004", "권한이 없습니다."),
-    PASSWORD_MISMATCH(BAD_REQUEST, "USER-005", "비밀번호가 일치하지 않습니다.");
+    PASSWORD_MISMATCH(BAD_REQUEST, "USER-005", "비밀번호가 일치하지 않습니다."),
+    ID_NOT_FOUND(NOT_FOUND, "USER-006", "존재하지 않는 id입니다.");
+
 
 
     private final HttpStatus httpStatus;

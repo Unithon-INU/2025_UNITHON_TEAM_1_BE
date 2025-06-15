@@ -1,24 +1,28 @@
 package com.example.unithon.domain.member.dto.res;
 
 import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.Role;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class SignupResDto {
+public class MemberGetResDto {
     private final Long id;
     private final String email;
+    private final Role role;
 
     @Builder
-    private SignupResDto(Long id, String email) {
+    private MemberGetResDto(Long id, String email, Role role) {
         this.id = id;
         this.email = email;
+        this.role = role;
     }
 
-    public static SignupResDto from(Member member) {
-        return SignupResDto.builder()
+    public static MemberGetResDto from(Member member) {
+        return MemberGetResDto.builder()
                 .id(member.getId())
                 .email(member.getEmail())
+                .role(member.getRole())
                 .build();
     }
 }

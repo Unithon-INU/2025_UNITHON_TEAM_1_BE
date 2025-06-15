@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class LoginReqDto {
+public class MemberLoginReqDto {
 
     @NotBlank(message = "email을 입력해주세요.")
     @Schema(example = "test@naver.com")

@@ -1,10 +1,11 @@
 package com.example.unithon.domain.member;
 
 
-import com.example.unithon.domain.member.dto.req.LoginReqDto;
-import com.example.unithon.domain.member.dto.req.SignupReqDto;
-import com.example.unithon.domain.member.dto.res.LoginResDto;
-import com.example.unithon.domain.member.dto.res.SignupResDto;
+import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
+import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;
+import com.example.unithon.domain.member.dto.res.MemberGetResDto;
+import com.example.unithon.domain.member.dto.res.MemberLoginResDto;
+import com.example.unithon.domain.member.dto.res.MemberSignupResDto;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import com.example.unithon.global.jwt.JwtTokenProvider;
@@ -13,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -25,7 +29,7 @@ public class MemberService {
 
     //회원가입
     @Transactional
-    public SignupResDto signup(SignupReqDto signupRequest) {
+    public MemberSignupResDto signup(MemberSignupReqDto signupRequest) {
         if (memberRepository.existsByEmail(signupRequest.getEmail())) {
             throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
@@ -41,12 +45,12 @@ public class MemberService {
                 .build();
         memberRepository.save(member);
         log.info("[회원가입 성공] email: {}", member.getEmail());
-        return SignupResDto.from(member);
+        return MemberSignupResDto.from(member);
     }
 
     //로그인
     @Transactional
-    public LoginResDto login(LoginReqDto loginRequest) {
+    public MemberLoginResDto login(MemberLoginReqDto loginRequest) {
         log.info("[로그인 시도] email: {}", loginRequest.getEmail());
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> {
@@ -61,6 +65,24 @@ public class MemberService {
         // 토큰 생성
         String token = jwtTokenProvider.generateAccessToken(member.getEmail());
         log.info("[로그인 성공] email: {}", member.getEmail());
-        return LoginResDto.from(member, token);
+        return MemberLoginResDto.from(member, token);
+    }
+
+    // 개별 회원 조회
+    @Transactional(readOnly = true)
+    public MemberGetResDto getMember(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> {
+                    return new CustomException(ErrorCode.ID_NOT_FOUND);
+                });
+        return MemberGetResDto.from(member);
+    }
+
+    //전체 회원 조회
+    @Transactional(readOnly = true)
+    public List<MemberGetResDto> getMemberList() {
+        return memberRepository.findAll().stream()
+                .map(MemberGetResDto::from)
+                .toList();
     }
 }

@@ -5,20 +5,20 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class LoginResDto {
+public class MemberLoginResDto {
     private final String email;
     private final String accessToken;
     private final String refreshToken;
 
     @Builder
-    private LoginResDto(String email, String accessToken, String refreshToken) {
+    private MemberLoginResDto(String email, String accessToken, String refreshToken) {
         this.email = email;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
 
-    public static LoginResDto from(Member member, String token) {
-        return LoginResDto.builder()
+    public static MemberLoginResDto from(Member member, String token) {
+        return MemberLoginResDto.builder()
                 .email(member.getEmail())
                 .accessToken(token)
                 .refreshToken(token)

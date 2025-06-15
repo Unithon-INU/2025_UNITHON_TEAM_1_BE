@@ -3,11 +3,10 @@ package com.example.unithon.domain.member.dto.req;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class SignupReqDto {
+public class MemberSignupReqDto {
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "올바른 이메일 형식을 입력해주세요.")

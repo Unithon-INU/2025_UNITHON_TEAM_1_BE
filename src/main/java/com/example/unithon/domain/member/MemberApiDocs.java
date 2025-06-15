@@ -1,9 +1,10 @@
 package com.example.unithon.domain.member;
 
-import com.example.unithon.domain.member.dto.req.LoginReqDto;
-import com.example.unithon.domain.member.dto.req.SignupReqDto;
-import com.example.unithon.domain.member.dto.res.LoginResDto;
-import com.example.unithon.domain.member.dto.res.SignupResDto;
+import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
+import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;
+import com.example.unithon.domain.member.dto.res.MemberGetResDto;
+import com.example.unithon.domain.member.dto.res.MemberLoginResDto;
+import com.example.unithon.domain.member.dto.res.MemberSignupResDto;
 import com.example.unithon.global.exception.ErrorResponseEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +18,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "members", description = "회원 API")
 @RequestMapping("/api/members")
@@ -47,7 +50,7 @@ public interface MemberApiDocs {
             },
             schema = @Schema(implementation = ErrorResponseEntity.class))),
     })
-    ResponseEntity<SignupResDto> signup(@Valid @RequestBody SignupReqDto signupRequest);
+    ResponseEntity<MemberSignupResDto> signup(@Valid @RequestBody MemberSignupReqDto signupRequest);
 
     @PostMapping("/login")
     @Operation(summary = "로그인",
@@ -72,6 +75,29 @@ public interface MemberApiDocs {
                         )
                 }))
     })
-    ResponseEntity<LoginResDto> login(@Valid @RequestBody LoginReqDto loginRequest);
+    ResponseEntity<MemberLoginResDto> login(@Valid @RequestBody MemberLoginReqDto loginRequest);
+
+    @GetMapping("/{memberId}")
+    @Operation(summary = "개별 회원 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "회원 조회 성공"),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 회원",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            examples = {
+                                    @ExampleObject(
+                                            name = "존재하지 않는 회원",
+                                            value = "{\"error\" : \"404\", \"message\" : \"존재하지 않는 회원입니다\"}"
+                                    )
+                            },
+                            schema = @Schema(implementation = ErrorResponseEntity.class)))
+    })
+    ResponseEntity<MemberGetResDto> getMember(@PathVariable Long memberId);
+
+    @GetMapping
+    @Operation(summary = "전체 회원 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "전체 회원 조회 성공")
+    })
+    ResponseEntity<List<MemberGetResDto>> getMemberList();
 }
 
