@@ -13,8 +13,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://localhost:3000",
                         "http://localhost:8080",
-                        "http://43.203.125.32:8080",
-                        "https://43.203.125.32:8080"
+                        "https://43.203.125.32:8080",
+                        "https://unithon1.shop",
+                        "https://unithon-inu.github.io/2025_UNITHON_TEAM_1_FE"
                 )
 
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
