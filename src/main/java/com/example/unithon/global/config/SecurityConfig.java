@@ -65,6 +65,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(List.of(
                 "http://localhost:3000",
+                "http://localhost:8080",
+                "https://unithon1.shop",
                 "https://unithon-inu.github.io/2025_UNITHON_TEAM_1_FE"
         ));
         configuration.setAllowedMethods(List.of("*"));
