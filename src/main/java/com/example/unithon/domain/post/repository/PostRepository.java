@@ -22,6 +22,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 특정 회원 게시글 조회
     List<Post> findByMemberOrderByCreatedAtDesc(Member member);
 
+    // (전체) 좋아요순 조회 -> 같으면 최신순
+    List<Post> findAllByOrderByLikeCountDescCreatedAtDesc();
+
     // 제목 + 내용 검색
     @Query("SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword% ORDER BY p.createdAt DESC")
     List<Post> findByTitleOrContent(@Param("keyword") String keyword);

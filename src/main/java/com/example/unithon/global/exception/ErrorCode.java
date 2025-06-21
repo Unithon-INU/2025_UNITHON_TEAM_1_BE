@@ -15,7 +15,8 @@ public enum ErrorCode {
     EMAIL_NOT_FOUND(NOT_FOUND, "USER-003", "존재하지 않는 email입니다."),
     FORBIDDEN_PERMISSION(FORBIDDEN, "USER-004", "권한이 없습니다."),
     PASSWORD_MISMATCH(BAD_REQUEST, "USER-005", "비밀번호가 일치하지 않습니다."),
-    ID_NOT_FOUND(NOT_FOUND, "USER-006", "존재하지 않는 id입니다.");
+    ID_NOT_FOUND(NOT_FOUND, "USER-006", "존재하지 않는 id입니다."),
+    POST_NOT_FOUND(NOT_FOUND, "POST-001", "존재하지 않는 post입니다.");
 
 
 

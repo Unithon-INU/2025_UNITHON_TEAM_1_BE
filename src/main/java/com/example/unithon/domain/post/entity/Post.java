@@ -2,19 +2,17 @@ package com.example.unithon.domain.post.entity;
 
 import com.example.unithon.domain.member.Member;
 import com.example.unithon.domain.post.Category;
+import com.example.unithon.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(name = "posts")
-public class Post {
+public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,10 +36,6 @@ public class Post {
 
     @Column(nullable = false)
     private Integer commentCount = 0;
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
     @Builder
     private Post(Member member, Category category, String title, String content) {
@@ -70,5 +64,11 @@ public class Post {
         if (this.commentCount > 0) {
             this.commentCount--;
         }
+    }
+
+    public void updatePost(Category category, String title, String content) {
+        this.category = category;
+        this.title = title;
+        this.content = content;
     }
 }
