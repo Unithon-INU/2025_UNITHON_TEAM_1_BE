@@ -67,7 +67,7 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "http://localhost:8080",
                 "https://unithon1.shop",
-                "https://unithon-inu.github.io/2025_UNITHON_TEAM_1_FE"
+                "https://unithon-inu.github.io"
         ));
         configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
