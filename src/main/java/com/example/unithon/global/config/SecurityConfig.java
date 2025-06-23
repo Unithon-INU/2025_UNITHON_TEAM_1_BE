@@ -66,7 +66,7 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(List.of(
                 "http://localhost:3000",
                 "http://localhost:8080",
-                "https://unithon1.shop",
+                "https://unithon1.shop", // 추후 삭제
                 "https://unithon-inu.github.io"
         ));
         configuration.setAllowedMethods(List.of("*"));
