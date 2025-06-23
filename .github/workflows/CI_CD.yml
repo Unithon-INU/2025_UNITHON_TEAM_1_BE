@@ -52,15 +52,13 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-          
-              
-              if [ "$(docker ps -aq -f name=${{secrets.DOCKER_REPO}})" ]; then
-                docker stop ${{secrets.DOCKER_REPO}}
-                docker rm ${{secrets.DOCKER_REPO}}
-              fi
-              
-              sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
-              sudo docker run -d \
+            if [ "$(docker ps -aq -f name=${{secrets.DOCKER_REPO}})" ]; then
+              docker stop ${{secrets.DOCKER_REPO}}
+              docker rm ${{secrets.DOCKER_REPO}}
+            fi
+            
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
+            sudo docker run -d \
               --name ${{ secrets.DOCKER_REPO }} \
               -p 8080:8080 \
               ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
