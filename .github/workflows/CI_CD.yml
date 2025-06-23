@@ -41,7 +41,7 @@ jobs:
     ## Build and Push to Docker Hub
     - name: Docker build & push to Hub
       run: |
-        docker build --no-cache -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} .
+        docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} .
         docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
       
     ## Deploy EC2
@@ -55,6 +55,7 @@ jobs:
             if [ "$(docker ps -aq -f name=${{secrets.DOCKER_REPO}})" ]; then
               docker stop ${{secrets.DOCKER_REPO}}
               docker rm ${{secrets.DOCKER_REPO}}
+              docker rmi ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             fi
             
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
