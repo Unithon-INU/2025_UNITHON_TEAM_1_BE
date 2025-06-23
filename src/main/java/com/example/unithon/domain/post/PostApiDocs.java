@@ -63,12 +63,21 @@ public interface PostApiDocs {
     })
     ResponseEntity<PostGetResDto> getPost(@PathVariable Long postId);
 
-    @GetMapping
-    @Operation(summary = "전체 게시글 조회",
-            description = "다양한 조건으로 게시글을 조회합니다. 파라미터는 모두 선택사항이며, 우선순위: memberId > keyword > category > sort",
+    @GetMapping("/top")
+    @Operation(summary = "인기 게시글 TOP 3 조회",
+            description = "좋아요 수가 많은 게시글 상위 3개를 조회합니다. 좋아요 수가 같으면 최신순으로 정렬됩니다.",
             security = @SecurityRequirement(name = ""))
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "전체 게시글 조회 성공"),
+            @ApiResponse(responseCode = "200", description = "인기 게시글 조회 성공")
+    })
+    ResponseEntity<List<PostGetResDto>> getTopPostsByLikes();
+
+    @GetMapping
+    @Operation(summary = "게시글 조회 및 검색",
+            description = "키워드 검색과 카테고리 필터링을 지원합니다. 모든 결과는 최신순으로 정렬됩니다.",
+            security = @SecurityRequirement(name = ""))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "게시글 조회 성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 파라미터",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             examples = {
@@ -77,43 +86,21 @@ public interface PostApiDocs {
                                             value = "{\"error\" : \"400\", \"message\" : \"유효하지 않은 카테고리입니다. HOUSING, JOBS, STUDY, SOCIAL, HELP 중 하나를 선택해주세요\"}"
                                     )
                             },
-                            schema = @Schema(implementation = ErrorResponseEntity.class))),
-            @ApiResponse(responseCode = "404", description = "회원 게시글 조회 실패",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            examples = {
-                                    @ExampleObject(
-                                            name = "존재하지 않는 회원",
-                                            value = "{\"error\" : \"404\", \"message\" : \"존재하지 않는 id입니다\"}"
-                                    )
-                            },
                             schema = @Schema(implementation = ErrorResponseEntity.class)))
     })
     @io.swagger.v3.oas.annotations.Parameters({
             @io.swagger.v3.oas.annotations.Parameter(
-                    name = "sort",
-                    description = "정렬 방식 (선택) - 'likes': 인기순 TOP 3, 'latest' 또는 미입력: 최신순",
-                    example = "likes"
+                    name = "keyword",
+                    description = "검색어 (선택) - 제목과 내용에서 검색"
             ),
             @io.swagger.v3.oas.annotations.Parameter(
                     name = "category",
-                    description = "카테고리 필터 (선택) - HOUSING, JOBS, STUDY, SOCIAL, HELP",
-                    example = "HOUSING"
-            ),
-            @io.swagger.v3.oas.annotations.Parameter(
-                    name = "keyword",
-                    description = "검색어 (선택) - 제목과 내용에서 검색",
-                    example = "part time job"
-            ),
-            @io.swagger.v3.oas.annotations.Parameter(
-                    name = "memberId",
-                    description = "특정 회원 ID (선택) - 해당 회원이 작성한 게시글만 조회",
-                    example = "1"
+                    description = "카테고리 필터 (선택) - HOUSING, JOBS, STUDY, SOCIAL, HELP"
             )
     })
-    ResponseEntity<List<PostGetResDto>> getPostList(@RequestParam(required = false) String sort,      // 정렬: likes(인기순), latest(최신순)
-                                                    @RequestParam(required = false) Category category, // 카테고리 필터
-                                                    @RequestParam(required = false) String keyword,    // 검색어
-                                                    @RequestParam(required = false) Long memberId);    // 특정 회원 게시글
+    ResponseEntity<List<PostGetResDto>> getPostList(@RequestParam(required = false) String keyword,
+                                                    @RequestParam(required = false) Category category);
+
 
     @PutMapping("/{postId}")
     @Operation(summary = "게시글 수정",
@@ -155,7 +142,6 @@ public interface PostApiDocs {
     @io.swagger.v3.oas.annotations.Parameter(
             name = "postId",
             description = "수정할 게시글의 ID",
-            example = "1",
             required = true
     )
     ResponseEntity<Void> updatePost(@AuthenticationPrincipal UserDetails user, @PathVariable Long postId, @Valid @RequestBody PostUpdateReqDto updateRequest);
@@ -187,7 +173,6 @@ public interface PostApiDocs {
     @io.swagger.v3.oas.annotations.Parameter(
             name = "postId",
             description = "삭제할 게시글의 ID",
-            example = "1",
             required = true
     )
     ResponseEntity<Void> deletePost(@AuthenticationPrincipal UserDetails user, @PathVariable Long postId);
