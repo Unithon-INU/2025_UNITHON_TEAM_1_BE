@@ -34,4 +34,13 @@ public class Member {
         this.role = role;
     }
 
+    // 회원 정보 업데이트
+    public void updateMemberInfo(String nickname) {
+        this.nickname = nickname;
+    }
+
+    // 비밀번호 업데이트
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }
