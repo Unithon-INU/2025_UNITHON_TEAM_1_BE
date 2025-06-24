@@ -5,6 +5,7 @@ import com.example.unithon.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -39,8 +40,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("OPTIONS", "/**").permitAll()
                         .requestMatchers(
-                                "/api/members/signup",
-                                "/api/members/login",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/swagger-resources/**",
@@ -51,6 +50,22 @@ public class SecurityConfig {
                                 "/favicon.ico",
                                 "/error"
                         ).permitAll()
+                        // 회원 - 회원가입/로그인은 인증 X
+                        .requestMatchers(HttpMethod.POST, "/api/members/signup", "/api/members/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/members/**").authenticated()
+
+                        // 게시글 - 조회는 인증 X, 관리는 ADMIN만
+                        .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/posts").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/posts/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/posts/**").authenticated()
+
+                        // 동아리 - 조회는 인증 X, 관리는 ADMIN만
+                        .requestMatchers(HttpMethod.GET, "/api/clubs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/clubs").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/clubs/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/clubs/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
 
