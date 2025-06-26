@@ -2,6 +2,7 @@ package com.example.unithon.domain.member;
 
 import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
 import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;
+import com.example.unithon.domain.member.dto.req.MemberTokenRefreshReqDto;
 import com.example.unithon.domain.member.dto.req.MemberUpdateReqDto;
 import com.example.unithon.domain.member.dto.res.*;
 import com.example.unithon.global.exception.CustomException;
@@ -35,8 +36,13 @@ public class MemberController implements MemberApiDocs{
     public ResponseEntity<MemberLoginResDto> login(@Valid @RequestBody MemberLoginReqDto loginRequest) {
         return ResponseEntity.ok(memberService.login(loginRequest));
     }
-    @Override
 
+    @Override
+    public ResponseEntity<MemberTokenRefreshResDto> refreshToken(@Valid @RequestBody MemberTokenRefreshReqDto refreshRequest) {
+        return ResponseEntity.ok(memberService.refreshToken(refreshRequest));
+    }
+
+    @Override
     public ResponseEntity<MemberGetResDto> getMember(@PathVariable Long memberId) {
         return ResponseEntity.ok(memberService.getMember(memberId));
     }

@@ -20,7 +20,10 @@ public enum ErrorCode {
     POST_NOT_FOUND(NOT_FOUND, "POST-001", "존재하지 않는 post입니다."),
 
     CLUB_NOT_FOUND(NOT_FOUND, "CLUB-001", "존재하지 않는 club입니다."),
-    DUPLICATE_CLUB(CONFLICT, "CLUB-002", "이미 존재하는 club 입니다.");
+    DUPLICATE_CLUB(CONFLICT, "CLUB-002", "이미 존재하는 club 입니다."),
+
+    INVALID_REFRESH_TOKEN(UNAUTHORIZED, "AUTH-001", "유효하지 않은 refresh token입니다."),
+    EXPIRED_REFRESH_TOKEN(UNAUTHORIZED, "AUTH-002", "만료된 refresh token입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;				// USER-001

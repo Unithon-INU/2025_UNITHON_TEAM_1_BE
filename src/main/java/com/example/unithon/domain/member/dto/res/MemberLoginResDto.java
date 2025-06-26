@@ -17,11 +17,11 @@ public class MemberLoginResDto {
         this.refreshToken = refreshToken;
     }
 
-    public static MemberLoginResDto from(Member member, String token) {
+    public static MemberLoginResDto from(Member member, String accessToken, String refreshToken) {
         return MemberLoginResDto.builder()
                 .email(member.getEmail())
-                .accessToken(token)
-                .refreshToken(token)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }

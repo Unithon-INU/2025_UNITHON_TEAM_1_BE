@@ -2,6 +2,7 @@ package com.example.unithon.domain.member;
 
 import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
 import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;
+import com.example.unithon.domain.member.dto.req.MemberTokenRefreshReqDto;
 import com.example.unithon.domain.member.dto.req.MemberUpdateReqDto;
 import com.example.unithon.domain.member.dto.res.*;
 import com.example.unithon.global.exception.ErrorResponseEntity;
@@ -77,6 +78,43 @@ public interface MemberApiDocs {
                 }))
     })
     ResponseEntity<MemberLoginResDto> login(@Valid @RequestBody MemberLoginReqDto loginRequest);
+
+    @PostMapping("/refresh")
+    @Operation(summary = "토큰 갱신",
+            description = "Refresh Token을 사용하여 새로운 Access Token과 Refresh Token을 발급받습니다.",
+            security = @SecurityRequirement(name = ""))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "토큰 갱신 성공"),
+            @ApiResponse(responseCode = "400", description = "토큰 갱신 실패",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            examples = {
+                                    @ExampleObject(
+                                            name = "유효성 검사 실패",
+                                            value = "{\"status\" : 400, \"code\" : \"VALIDATION\", \"message\" : \"refresh token을 입력해주세요\"}"
+                                    )
+                            },
+                            schema = @Schema(implementation = ErrorResponseEntity.class))),
+            @ApiResponse(responseCode = "401", description = "토큰 갱신 실패",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            examples = {
+                                    @ExampleObject(
+                                            name = "유효하지 않은 Refresh Token",
+                                            value = "{\"status\" : 401, \"code\" : \"AUTH-001\", \"message\" : \"유효하지 않은 refresh token입니다\"}"
+                                    )
+                            },
+                            schema = @Schema(implementation = ErrorResponseEntity.class))),
+            @ApiResponse(responseCode = "404", description = "토큰 갱신 실패",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            examples = {
+                                    @ExampleObject(
+                                            name = "사용자 정보 없음",
+                                            value = "{\"status\" : 404, \"code\" : \"USER-003\", \"message\" : \"존재하지 않는 email입니다\"}"
+                                    )
+                            },
+                            schema = @Schema(implementation = ErrorResponseEntity.class)))
+    })
+    ResponseEntity<MemberTokenRefreshResDto> refreshToken(@Valid @RequestBody MemberTokenRefreshReqDto refreshRequest);
+
 
     @GetMapping("/{memberId}")
     @Operation(summary = "개별 회원 조회")

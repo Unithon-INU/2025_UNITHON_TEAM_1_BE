@@ -51,7 +51,7 @@ public class SecurityConfig {
                                 "/error"
                         ).permitAll()
                         // 회원 - 회원가입/로그인은 인증 X
-                        .requestMatchers(HttpMethod.POST, "/api/members/signup", "/api/members/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/members/signup", "/api/members/login", "/api/members/refresh").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/members/**").authenticated()
 
                         // 게시글 - 조회는 인증 X, 관리는 ADMIN만

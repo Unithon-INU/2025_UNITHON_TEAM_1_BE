@@ -3,6 +3,7 @@ package com.example.unithon.domain.member;
 
 import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
 import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;
+import com.example.unithon.domain.member.dto.req.MemberTokenRefreshReqDto;
 import com.example.unithon.domain.member.dto.req.MemberUpdateReqDto;
 import com.example.unithon.domain.member.dto.res.*;
 import com.example.unithon.global.exception.CustomException;
@@ -63,9 +64,33 @@ public class MemberService {
             throw new CustomException(ErrorCode.UNAUTHORIZED_LOGIN);
         }
         // 토큰 생성
-        String token = jwtTokenProvider.generateAccessToken(member.getEmail());
+        String accessToken = jwtTokenProvider.generateAccessToken(member.getEmail());
+        String refreshToken = jwtTokenProvider.generateRefreshToken(member.getEmail());
+
         log.info("[로그인 성공] email: {}", member.getEmail());
-        return MemberLoginResDto.from(member, token);
+        return MemberLoginResDto.from(member, accessToken, refreshToken);
+    }
+
+    // 토큰 갱신
+    @Transactional
+    public MemberTokenRefreshResDto refreshToken(MemberTokenRefreshReqDto refreshRequest) {
+        String refreshToken = refreshRequest.getRefreshToken();
+
+        // Refresh Token 유효성 검증
+        if (!jwtTokenProvider.validateToken(refreshToken)) {
+            throw new CustomException(ErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
+        // Refresh Token에서 사용자 정보 추출
+        String email = jwtTokenProvider.parseUsername(refreshToken);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorCode.EMAIL_NOT_FOUND));
+
+        // 새로운 토큰들 생성
+        String newAccessToken = jwtTokenProvider.generateAccessToken(member.getEmail());
+        String newRefreshToken = jwtTokenProvider.generateRefreshToken(member.getEmail());
+
+        return MemberTokenRefreshResDto.of(newAccessToken, newRefreshToken);
     }
 
     // 개별 회원 조회
