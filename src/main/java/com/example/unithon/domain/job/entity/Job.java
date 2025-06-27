@@ -41,10 +41,10 @@ public class Job extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String schedule;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String experience;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String language;
 
     @Column(nullable = false, length = 2000)
@@ -56,13 +56,13 @@ public class Job extends BaseEntity {
     @Column(nullable = false, length = 2000)
     private String requirements;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String contactPerson;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String contactEmail;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = true, length = 50)
     private String contactPhone;
 
     @Builder
