@@ -1,6 +1,6 @@
 package com.example.unithon.domain.club.entity;
 
-import com.example.unithon.domain.club.Division;
+import com.example.unithon.domain.club.enums.Division;
 import com.example.unithon.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;

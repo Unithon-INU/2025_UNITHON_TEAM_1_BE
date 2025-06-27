@@ -1,6 +1,6 @@
 package com.example.unithon.domain.postLike.repository;
 
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.domain.post.entity.Post;
 import com.example.unithon.domain.postLike.entity.PostLike;
 import org.springframework.data.jpa.repository.JpaRepository;

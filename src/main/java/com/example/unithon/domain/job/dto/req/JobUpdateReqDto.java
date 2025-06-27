@@ -1,6 +1,6 @@
 package com.example.unithon.domain.job.dto.req;
 
-import com.example.unithon.domain.job.JobField;
+import com.example.unithon.domain.job.enums.JobField;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

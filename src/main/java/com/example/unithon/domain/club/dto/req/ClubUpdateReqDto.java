@@ -1,6 +1,6 @@
 package com.example.unithon.domain.club.dto.req;
 
-import com.example.unithon.domain.club.Division;
+import com.example.unithon.domain.club.enums.Division;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

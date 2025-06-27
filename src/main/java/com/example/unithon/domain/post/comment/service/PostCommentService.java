@@ -1,6 +1,6 @@
 package com.example.unithon.domain.post.comment.service;
 
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.domain.post.comment.dto.req.PostCommentCreateReqDto;
 import com.example.unithon.domain.post.comment.dto.req.PostCommentUpdateReqDto;
 import com.example.unithon.domain.post.comment.dto.res.PostCommentCreateResDto;

@@ -1,5 +1,6 @@
-package com.example.unithon.domain.member;
+package com.example.unithon.domain.member.entity;
 
+import com.example.unithon.domain.member.enums.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

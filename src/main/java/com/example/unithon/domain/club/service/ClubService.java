@@ -1,15 +1,15 @@
 package com.example.unithon.domain.club.service;
 
-import com.example.unithon.domain.club.Division;
+import com.example.unithon.domain.club.enums.Division;
 import com.example.unithon.domain.club.dto.req.ClubCreateReqDto;
 import com.example.unithon.domain.club.dto.req.ClubUpdateReqDto;
 import com.example.unithon.domain.club.dto.res.ClubCreateResDto;
 import com.example.unithon.domain.club.dto.res.ClubGetResDto;
 import com.example.unithon.domain.club.entity.Club;
 import com.example.unithon.domain.club.repository.ClubRepository;
-import com.example.unithon.domain.member.Member;
-import com.example.unithon.domain.member.MemberRepository;
-import com.example.unithon.domain.member.Role;
+import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.member.repository.MemberRepository;
+import com.example.unithon.domain.member.enums.Role;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;

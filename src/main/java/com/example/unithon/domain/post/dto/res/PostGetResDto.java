@@ -1,7 +1,7 @@
 package com.example.unithon.domain.post.dto.res;
 
 import com.example.unithon.domain.post.entity.Post;
-import com.example.unithon.domain.post.Category;
+import com.example.unithon.domain.post.enums.Category;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package com.example.unithon.domain.job.controller;
 
-import com.example.unithon.domain.job.JobField;
+import com.example.unithon.domain.job.enums.JobField;
 import com.example.unithon.domain.job.dto.req.JobCreateReqDto;
 import com.example.unithon.domain.job.dto.req.JobUpdateReqDto;
 import com.example.unithon.domain.job.dto.res.JobCreateResDto;

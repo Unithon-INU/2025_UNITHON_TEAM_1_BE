@@ -1,6 +1,6 @@
 package com.example.unithon.domain.post.dto.req;
 
-import com.example.unithon.domain.post.Category;
+import com.example.unithon.domain.post.enums.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

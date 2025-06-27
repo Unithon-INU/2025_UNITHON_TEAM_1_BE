@@ -1,4 +1,4 @@
-package com.example.unithon.domain.member;
+package com.example.unithon.domain.member.controller;
 
 import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
 import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;

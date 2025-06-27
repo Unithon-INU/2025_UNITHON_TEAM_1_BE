@@ -1,6 +1,6 @@
 package com.example.unithon.domain.job.dto.res;
 
-import com.example.unithon.domain.job.JobField;
+import com.example.unithon.domain.job.enums.JobField;
 import com.example.unithon.domain.job.entity.Job;
 import lombok.Builder;
 import lombok.Getter;

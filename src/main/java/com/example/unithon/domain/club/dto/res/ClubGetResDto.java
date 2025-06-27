@@ -1,6 +1,6 @@
 package com.example.unithon.domain.club.dto.res;
 
-import com.example.unithon.domain.club.Division;
+import com.example.unithon.domain.club.enums.Division;
 import com.example.unithon.domain.club.entity.Club;
 import lombok.Builder;
 import lombok.Getter;

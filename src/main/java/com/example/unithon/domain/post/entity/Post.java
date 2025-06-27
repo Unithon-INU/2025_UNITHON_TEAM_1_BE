@@ -1,7 +1,7 @@
 package com.example.unithon.domain.post.entity;
 
-import com.example.unithon.domain.member.Member;
-import com.example.unithon.domain.post.Category;
+import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.post.enums.Category;
 import com.example.unithon.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;

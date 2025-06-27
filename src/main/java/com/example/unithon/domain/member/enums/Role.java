@@ -1,4 +1,4 @@
-package com.example.unithon.domain.member;
+package com.example.unithon.domain.member.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

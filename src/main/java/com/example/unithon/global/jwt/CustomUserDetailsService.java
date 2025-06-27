@@ -1,7 +1,7 @@
 package com.example.unithon.global.jwt;
 
-import com.example.unithon.domain.member.Member;
-import com.example.unithon.domain.member.MemberRepository;
+import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.member.repository.MemberRepository;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;

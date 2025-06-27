@@ -1,6 +1,6 @@
 package com.example.unithon.domain.member.dto.res;
 
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 

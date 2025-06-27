@@ -1,12 +1,12 @@
 package com.example.unithon.domain.club.controller;
 
-import com.example.unithon.domain.club.Division;
+import com.example.unithon.domain.club.enums.Division;
 import com.example.unithon.domain.club.dto.req.ClubCreateReqDto;
 import com.example.unithon.domain.club.dto.req.ClubUpdateReqDto;
 import com.example.unithon.domain.club.dto.res.ClubCreateResDto;
 import com.example.unithon.domain.club.dto.res.ClubGetResDto;
 import com.example.unithon.domain.club.service.ClubService;
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import com.example.unithon.global.jwt.CustomUserDetails;

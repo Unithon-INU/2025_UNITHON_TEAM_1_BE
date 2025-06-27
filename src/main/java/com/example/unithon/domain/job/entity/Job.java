@@ -1,6 +1,6 @@
 package com.example.unithon.domain.job.entity;
 
-import com.example.unithon.domain.job.JobField;
+import com.example.unithon.domain.job.enums.JobField;
 import com.example.unithon.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;

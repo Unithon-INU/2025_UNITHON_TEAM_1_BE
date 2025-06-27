@@ -1,4 +1,4 @@
-package com.example.unithon.domain.job;
+package com.example.unithon.domain.job.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

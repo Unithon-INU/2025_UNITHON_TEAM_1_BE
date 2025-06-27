@@ -1,12 +1,12 @@
 package com.example.unithon.domain.job.controller;
 
-import com.example.unithon.domain.job.JobField;
+import com.example.unithon.domain.job.enums.JobField;
 import com.example.unithon.domain.job.dto.req.JobCreateReqDto;
 import com.example.unithon.domain.job.dto.req.JobUpdateReqDto;
 import com.example.unithon.domain.job.dto.res.JobCreateResDto;
 import com.example.unithon.domain.job.dto.res.JobGetResDto;
 import com.example.unithon.domain.job.service.JobService;
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import com.example.unithon.global.jwt.CustomUserDetails;

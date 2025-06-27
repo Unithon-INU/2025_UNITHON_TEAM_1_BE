@@ -1,7 +1,7 @@
 package com.example.unithon.domain.postLike.controller;
 
-import com.example.unithon.domain.member.Member;
-import com.example.unithon.domain.postLike.PostLikeService;
+import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.postLike.service.PostLikeService;
 import com.example.unithon.domain.postLike.dto.PostLikeResDto;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;

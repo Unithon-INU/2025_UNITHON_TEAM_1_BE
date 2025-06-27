@@ -1,6 +1,7 @@
-package com.example.unithon.domain.post;
+package com.example.unithon.domain.post.controller;
 
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.post.enums.Category;
 import com.example.unithon.domain.post.dto.req.PostUpdateReqDto;
 import com.example.unithon.domain.post.dto.req.PostUploadReqDto;
 import com.example.unithon.domain.post.dto.res.PostGetResDto;

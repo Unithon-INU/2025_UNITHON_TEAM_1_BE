@@ -1,6 +1,6 @@
 package com.example.unithon.global.jwt;
 
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

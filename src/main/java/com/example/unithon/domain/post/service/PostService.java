@@ -1,14 +1,14 @@
 package com.example.unithon.domain.post.service;
 
-import com.example.unithon.domain.member.Member;
-import com.example.unithon.domain.member.MemberRepository;
+import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.member.repository.MemberRepository;
 import com.example.unithon.domain.post.comment.repository.PostCommentRepository;
 import com.example.unithon.domain.post.dto.req.PostUpdateReqDto;
 import com.example.unithon.domain.post.dto.req.PostUploadReqDto;
 import com.example.unithon.domain.post.dto.res.PostGetResDto;
 import com.example.unithon.domain.post.dto.res.PostUploadResDto;
 import com.example.unithon.domain.post.entity.Post;
-import com.example.unithon.domain.post.Category;
+import com.example.unithon.domain.post.enums.Category;
 import com.example.unithon.domain.post.repository.PostRepository;
 import com.example.unithon.domain.postLike.repository.PostLikeRepository;
 import com.example.unithon.global.exception.CustomException;

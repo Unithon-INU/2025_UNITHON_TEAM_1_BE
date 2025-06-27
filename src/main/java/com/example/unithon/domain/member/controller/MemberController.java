@@ -1,10 +1,12 @@
-package com.example.unithon.domain.member;
+package com.example.unithon.domain.member.controller;
 
+import com.example.unithon.domain.member.service.MemberService;
 import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
 import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;
 import com.example.unithon.domain.member.dto.req.MemberTokenRefreshReqDto;
 import com.example.unithon.domain.member.dto.req.MemberUpdateReqDto;
 import com.example.unithon.domain.member.dto.res.*;
+import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import com.example.unithon.global.jwt.CustomUserDetails;

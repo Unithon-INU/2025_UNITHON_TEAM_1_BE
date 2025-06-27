@@ -1,7 +1,7 @@
 package com.example.unithon.domain.post.repository;
 
-import com.example.unithon.domain.member.Member;
-import com.example.unithon.domain.post.Category;
+import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.post.enums.Category;
 import com.example.unithon.domain.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

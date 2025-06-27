@@ -1,6 +1,6 @@
 package com.example.unithon.domain.job.repository;
 
-import com.example.unithon.domain.job.JobField;
+import com.example.unithon.domain.job.enums.JobField;
 import com.example.unithon.domain.job.entity.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

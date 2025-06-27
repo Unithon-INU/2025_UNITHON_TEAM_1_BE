@@ -1,6 +1,6 @@
 package com.example.unithon.domain.club.repository;
 
-import com.example.unithon.domain.club.Division;
+import com.example.unithon.domain.club.enums.Division;
 import com.example.unithon.domain.club.entity.Club;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

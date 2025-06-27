@@ -1,5 +1,6 @@
-package com.example.unithon.domain.member;
+package com.example.unithon.domain.member.repository;
 
+import com.example.unithon.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

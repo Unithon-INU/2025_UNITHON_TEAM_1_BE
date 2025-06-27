@@ -1,6 +1,6 @@
 package com.example.unithon.domain.post.comment.entity;
 
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.domain.post.entity.Post;
 import com.example.unithon.global.entity.BaseEntity;
 import jakarta.persistence.*;

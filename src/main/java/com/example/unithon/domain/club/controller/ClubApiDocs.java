@@ -1,6 +1,6 @@
 package com.example.unithon.domain.club.controller;
 
-import com.example.unithon.domain.club.Division;
+import com.example.unithon.domain.club.enums.Division;
 import com.example.unithon.domain.club.dto.req.ClubCreateReqDto;
 import com.example.unithon.domain.club.dto.req.ClubUpdateReqDto;
 import com.example.unithon.domain.club.dto.res.ClubCreateResDto;

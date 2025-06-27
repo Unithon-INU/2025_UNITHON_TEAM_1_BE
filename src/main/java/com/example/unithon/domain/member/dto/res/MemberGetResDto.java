@@ -1,7 +1,7 @@
 package com.example.unithon.domain.member.dto.res;
 
-import com.example.unithon.domain.member.Member;
-import com.example.unithon.domain.member.Role;
+import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.member.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
 

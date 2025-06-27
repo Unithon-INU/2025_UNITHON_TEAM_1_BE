@@ -1,6 +1,6 @@
-package com.example.unithon.domain.postLike;
+package com.example.unithon.domain.postLike.service;
 
-import com.example.unithon.domain.member.Member;
+import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.domain.post.entity.Post;
 import com.example.unithon.domain.post.repository.PostRepository;
 import com.example.unithon.domain.postLike.dto.PostLikeResDto;
