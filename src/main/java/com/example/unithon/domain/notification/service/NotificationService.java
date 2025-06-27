@@ -12,6 +12,8 @@ import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,10 +75,11 @@ public class NotificationService {
         log.info("댓글 답글 알림 생성: parentCommentId={}, replyId={}", parentComment.getId(), reply.getId());
     }
 
-    // 사용자의 알림 목록 조회
+    // 사용자의 알림 목록 조회 (최대 3개)
     @Transactional(readOnly = true)
     public List<NotificationResDto> getNotifications(Member member) {
-        return notificationRepository.findByReceiverOrderByCreatedAtDesc(member).stream()
+        Pageable pageable = PageRequest.of(0, 3);
+        return notificationRepository.findByReceiverOrderByCreatedAtDesc(member, pageable).stream()
                 .map(NotificationResDto::from)
                 .toList();
     }

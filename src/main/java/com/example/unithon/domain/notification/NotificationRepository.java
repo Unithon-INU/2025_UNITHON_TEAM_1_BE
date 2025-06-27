@@ -2,6 +2,7 @@ package com.example.unithon.domain.notification;
 
 import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.domain.notification.entity.Notification;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,9 +14,8 @@ import java.util.List;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-    // 특정 사용자의 알림 목록 조회 (최신순)
-    List<Notification> findByReceiverOrderByCreatedAtDesc(Member receiver);
-
+    // 특정 사용자의 알림 목록 조회 (최신순, 페이징)
+    List<Notification> findByReceiverOrderByCreatedAtDesc(Member receiver, Pageable pageable);
     // 특정 사용자의 읽지 않은 알림 개수
     int countByReceiverAndIsReadFalse(Member receiver);
 
