@@ -38,7 +38,10 @@ public enum ErrorCode {
     // Image 관련 에러
     INVALID_FILE_FORMAT(BAD_REQUEST, "IMAGE-001", "지원하지 않는 파일 형식입니다."),
     FILE_SIZE_EXCEEDED(BAD_REQUEST, "IMAGE-002", "파일 크기는 5MB 이하여야 합니다."),
-    IMAGE_UPLOAD_FAILED(INTERNAL_SERVER_ERROR, "IMAGE-003", "이미지 업로드에 실패했습니다.");
+    IMAGE_UPLOAD_FAILED(INTERNAL_SERVER_ERROR, "IMAGE-003", "이미지 업로드에 실패했습니다."),
+
+    // Job 관련 에러
+    JOB_NOT_FOUND(NOT_FOUND, "JOB-001", "존재하지 않는 채용 공고입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;				// USER-001

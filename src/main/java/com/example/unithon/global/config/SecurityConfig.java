@@ -69,6 +69,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/clubs/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/clubs/**").hasRole("ADMIN")
 
+                        // 채용 공고 - 조회는 인증 X, 관리는 ADMIN만
+                        .requestMatchers(HttpMethod.GET, "/api/jobs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/jobs").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/jobs/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/jobs/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
 
