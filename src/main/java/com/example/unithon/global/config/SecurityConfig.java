@@ -60,6 +60,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/posts/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/posts/**").authenticated()
 
+                        // 게시글 좋아요 - 모든 작업에 인증 필요
+                        .requestMatchers("/api/posts/*/likes").authenticated()
+
                         // 동아리 - 조회는 인증 X, 관리는 ADMIN만
                         .requestMatchers(HttpMethod.GET, "/api/clubs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/clubs").hasRole("ADMIN")

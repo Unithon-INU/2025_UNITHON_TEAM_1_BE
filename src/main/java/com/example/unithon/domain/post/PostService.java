@@ -8,6 +8,7 @@ import com.example.unithon.domain.post.dto.res.PostGetResDto;
 import com.example.unithon.domain.post.dto.res.PostUploadResDto;
 import com.example.unithon.domain.post.entity.Post;
 import com.example.unithon.domain.post.repository.PostRepository;
+import com.example.unithon.domain.postLike.repository.PostLikeRepository;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final PostLikeRepository postLikeRepository;
 
     // 게시글 업로드
     @Transactional
@@ -62,6 +64,10 @@ public class PostService {
             throw new CustomException(ErrorCode.FORBIDDEN_PERMISSION);
         }
 
+        // 연관된 좋아요 먼저 삭제
+        postLikeRepository.deleteAllByPost(post);
+
+        // 게시글 삭제
         postRepository.delete(post);
         log.info("[게시글 삭제] postId: {}, memberId: {}", postId, currentMember.getId());
     }
