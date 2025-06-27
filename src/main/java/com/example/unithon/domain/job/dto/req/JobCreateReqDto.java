@@ -42,11 +42,9 @@ public class JobCreateReqDto {
     @Schema(example = "Weekends")
     private String schedule;
 
-    @NotBlank(message = "경력 요구사항을 입력해주세요.")
     @Schema(example = "Entry level")
     private String experience;
 
-    @NotBlank(message = "언어 요구사항을 입력해주세요.")
     @Schema(example = "English & Korean")
     private String language;
 
@@ -62,16 +60,13 @@ public class JobCreateReqDto {
     @Schema(example = "Current INU student (undergraduate or graduate)...")
     private String requirements;
 
-    @NotBlank(message = "담당자명을 입력해주세요.")
     @Schema(example = "International Affairs Office")
     private String contactPerson;
 
-    @NotBlank(message = "담당자 이메일을 입력해주세요.")
     @Email(message = "올바른 이메일 형식을 입력해주세요.")
     @Schema(example = "international@inu.ac.kr")
     private String contactEmail;
 
-    @NotBlank(message = "담당자 전화번호를 입력해주세요.")
     @Schema(example = "+82-32-835-8114")
     private String contactPhone;
 }
