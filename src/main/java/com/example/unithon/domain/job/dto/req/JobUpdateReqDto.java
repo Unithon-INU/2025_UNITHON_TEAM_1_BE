@@ -2,7 +2,6 @@ package com.example.unithon.domain.job.dto.req;
 
 import com.example.unithon.domain.job.enums.JobField;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -63,7 +62,6 @@ public class JobUpdateReqDto {
     @Schema(example = "International Affairs Office")
     private String contactPerson;
 
-    @Email(message = "올바른 이메일 형식을 입력해주세요.")
     @Schema(example = "international@inu.ac.kr")
     private String contactEmail;
 
