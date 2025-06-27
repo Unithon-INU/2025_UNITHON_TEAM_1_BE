@@ -11,5 +11,5 @@ public enum Division {
     ACADEMIC,
     HOBBY_EXHIBITION,
     VOLUNTEER,
-    RELIGIOUS;
+    RELIGIOUS
 }

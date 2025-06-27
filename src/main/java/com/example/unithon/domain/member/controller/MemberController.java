@@ -1,12 +1,9 @@
 package com.example.unithon.domain.member.controller;
 
-import com.example.unithon.domain.member.service.MemberService;
-import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
-import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;
-import com.example.unithon.domain.member.dto.req.MemberTokenRefreshReqDto;
-import com.example.unithon.domain.member.dto.req.MemberUpdateReqDto;
+import com.example.unithon.domain.member.dto.req.*;
 import com.example.unithon.domain.member.dto.res.*;
 import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.member.service.MemberService;
 import com.example.unithon.global.exception.CustomException;
 import com.example.unithon.global.exception.ErrorCode;
 import com.example.unithon.global.jwt.CustomUserDetails;
@@ -15,17 +12,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/members")
-public class MemberController implements MemberApiDocs{
+public class MemberController implements MemberApiDocs {
 
     private final MemberService memberService;
 
@@ -65,6 +60,23 @@ public class MemberController implements MemberApiDocs{
                                                            @Valid @RequestBody MemberUpdateReqDto updateRequest) {
         Member member = getCurrentMember(user);
         return ResponseEntity.ok(memberService.updateMember(member, updateRequest));
+    }
+
+    @Override
+    public ResponseEntity<MemberUpdateResDto> updateProfile(@AuthenticationPrincipal UserDetails user,
+                                                            @RequestParam(value = "nickname", required = false) String nickname,
+                                                            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) {
+        Member member = getCurrentMember(user);
+
+        MemberImageUploadReqDto imageUploadRequest = new MemberImageUploadReqDto(nickname);
+
+        return ResponseEntity.ok(memberService.updateProfile(member, imageUploadRequest, profileImage));
+    }
+
+    @Override
+    public ResponseEntity<MemberUpdateResDto> deleteProfileImage(@AuthenticationPrincipal UserDetails user) {
+        Member member = getCurrentMember(user);
+        return ResponseEntity.ok(memberService.deleteProfileImage(member));
     }
 
     private Member getCurrentMember(UserDetails userDetails) {

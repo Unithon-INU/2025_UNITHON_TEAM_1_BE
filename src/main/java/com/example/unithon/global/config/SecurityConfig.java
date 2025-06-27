@@ -50,9 +50,13 @@ public class SecurityConfig {
                                 "/favicon.ico",
                                 "/error"
                         ).permitAll()
-                        // 회원 - 회원가입/로그인은 인증 X
+                        // 회원 - 회원가입/로그인/토큰갱신은 인증 X
                         .requestMatchers(HttpMethod.POST, "/api/members/signup", "/api/members/login", "/api/members/refresh").permitAll()
+                        // 회원 - 목록 조회, 마이페이지와 프로필 관리는 인증 필요
                         .requestMatchers(HttpMethod.GET, "/api/members/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/members/me").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/members/me/profile").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/members/me/profile-image").authenticated()
 
                         // 게시글 - 조회는 인증 X, 관리는 ADMIN만
                         .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()

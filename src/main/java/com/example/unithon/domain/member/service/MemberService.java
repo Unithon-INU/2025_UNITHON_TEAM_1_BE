@@ -1,10 +1,6 @@
 package com.example.unithon.domain.member.service;
 
-
-import com.example.unithon.domain.member.dto.req.MemberLoginReqDto;
-import com.example.unithon.domain.member.dto.req.MemberSignupReqDto;
-import com.example.unithon.domain.member.dto.req.MemberTokenRefreshReqDto;
-import com.example.unithon.domain.member.dto.req.MemberUpdateReqDto;
+import com.example.unithon.domain.member.dto.req.*;
 import com.example.unithon.domain.member.dto.res.*;
 import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.domain.member.enums.Role;
@@ -18,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,6 +26,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final MemberImageService memberImageService;
 
     //회원가입
     @Transactional
@@ -46,9 +44,9 @@ public class MemberService {
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
                 .nickname(signupRequest.getNickname())
                 .role(Role.USER) // USER 권한 부여
+                .profileImageUrl(null) // 기본값 null
                 .build();
         memberRepository.save(member);
-        log.info("[회원가입 성공] email: {}", member.getEmail());
         return MemberSignupResDto.from(member);
     }
 
@@ -125,7 +123,7 @@ public class MemberService {
         return MemberMyPageResDto.from(member);
     }
 
-    // 회원 정보 수정
+    // 회원 정보 수정 (텍스트 정보만)
     @Transactional
     public MemberUpdateResDto updateMember(Member currentMember, MemberUpdateReqDto updateRequest) {
         Member member = memberRepository.findById(currentMember.getId())
@@ -156,6 +154,60 @@ public class MemberService {
             // 비밀번호 업데이트
             member.updatePassword(passwordEncoder.encode(updateRequest.getNewPassword()));
         }
+
+        return MemberUpdateResDto.from(member);
+    }
+
+    // 프로필 이미지 업로드/업데이트
+    @Transactional
+    public MemberUpdateResDto updateProfile(Member currentMember,
+                                            MemberImageUploadReqDto updateRequest,
+                                            MultipartFile profileImage) {
+        Member member = memberRepository.findById(currentMember.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+
+        String profileImageUrl = member.getProfileImageUrl();
+
+        // 새 프로필 이미지가 업로드된 경우
+        if (profileImage != null && !profileImage.isEmpty()) {
+            // 기존 프로필 이미지 삭제
+            if (profileImageUrl != null) {
+                memberImageService.deleteProfileImage(profileImageUrl);
+            }
+            // 새 프로필 이미지 업로드
+            profileImageUrl = memberImageService.uploadProfileImage(profileImage);
+        }
+
+        // 닉네임 업데이트 (값이 있을 때만)
+        String nickname = member.getNickname();
+        if (StringUtils.hasText(updateRequest.getNickname())) {
+            nickname = updateRequest.getNickname();
+        }
+
+        // 회원 정보 업데이트
+        member.updateMemberInfo(nickname, profileImageUrl);
+
+        log.info("[프로필 업데이트 완료] memberId: {}, nickname: {}, hasImage: {}",
+                member.getId(), nickname, profileImageUrl != null);
+
+        return MemberUpdateResDto.from(member);
+    }
+
+    // 프로필 이미지 삭제
+    @Transactional
+    public MemberUpdateResDto deleteProfileImage(Member currentMember) {
+        Member member = memberRepository.findById(currentMember.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+
+        // S3에서 이미지 삭제
+        if (member.getProfileImageUrl() != null) {
+            memberImageService.deleteProfileImage(member.getProfileImageUrl());
+        }
+
+        // 데이터베이스에서 URL 제거
+        member.updateProfileImage(null);
+
+        log.info("[프로필 이미지 삭제 완료] memberId: {}", member.getId());
 
         return MemberUpdateResDto.from(member);
     }

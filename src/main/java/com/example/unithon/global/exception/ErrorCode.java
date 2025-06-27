@@ -40,6 +40,10 @@ public enum ErrorCode {
     FILE_SIZE_EXCEEDED(BAD_REQUEST, "IMAGE-002", "파일 크기는 5MB 이하여야 합니다."),
     IMAGE_UPLOAD_FAILED(INTERNAL_SERVER_ERROR, "IMAGE-003", "이미지 업로드에 실패했습니다."),
 
+    // Profile Image 관련 에러 (2MB 제한)
+    PROFILE_FILE_SIZE_EXCEEDED(BAD_REQUEST, "PROFILE-001", "프로필 이미지 크기는 2MB 이하여야 합니다."),
+    PROFILE_IMAGE_UPLOAD_FAILED(INTERNAL_SERVER_ERROR, "PROFILE-002", "프로필 이미지 업로드에 실패했습니다."),
+
     // Job 관련 에러
     JOB_NOT_FOUND(NOT_FOUND, "JOB-001", "존재하지 않는 채용 공고입니다.");
 
