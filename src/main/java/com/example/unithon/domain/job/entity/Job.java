@@ -47,13 +47,14 @@ public class Job extends BaseEntity {
     @Column(nullable = true, length = 500)
     private String language;
 
-    @Column(nullable = false, length = 2000)
+    // 긴 텍스트는 length 대신 TEXT
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false, length = 2000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String responsibilities;
 
-    @Column(nullable = false, length = 2000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String requirements;
 
     @Column(nullable = true, length = 100)
