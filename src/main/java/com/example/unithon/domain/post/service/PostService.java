@@ -2,6 +2,7 @@ package com.example.unithon.domain.post.service;
 
 import com.example.unithon.domain.member.entity.Member;
 import com.example.unithon.domain.member.repository.MemberRepository;
+import com.example.unithon.domain.notification.service.NotificationService;
 import com.example.unithon.domain.post.comment.repository.PostCommentRepository;
 import com.example.unithon.domain.post.dto.req.PostUpdateReqDto;
 import com.example.unithon.domain.post.dto.req.PostUploadReqDto;
@@ -31,6 +32,7 @@ public class PostService {
     private final PostLikeRepository postLikeRepository;
     private final PostCommentRepository postCommentRepository;
     private final PostImageService postImageService;
+    private final NotificationService notificationService; // 알림 서비스 추가
 
     // 게시글 업로드 (이미지 포함)
     @Transactional
@@ -93,6 +95,9 @@ public class PostService {
         if (post.getImageUrl() != null) {
             postImageService.deleteImage(post.getImageUrl());
         }
+
+        // 게시글과 관련된 알림 삭제
+        notificationService.deleteNotificationsByPost(postId);
 
         // 게시글의 모든 댓글 삭제
         postCommentRepository.deleteAllByPost(post);

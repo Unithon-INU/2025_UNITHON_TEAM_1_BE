@@ -45,7 +45,10 @@ public enum ErrorCode {
     PROFILE_IMAGE_UPLOAD_FAILED(INTERNAL_SERVER_ERROR, "PROFILE-002", "프로필 이미지 업로드에 실패했습니다."),
 
     // Job 관련 에러
-    JOB_NOT_FOUND(NOT_FOUND, "JOB-001", "존재하지 않는 채용 공고입니다.");
+    JOB_NOT_FOUND(NOT_FOUND, "JOB-001", "존재하지 않는 채용 공고입니다."),
+
+    // Notification 관련 에러
+    NOTIFICATION_NOT_FOUND(NOT_FOUND, "NOTIFICATION-001", "존재하지 않는 알림입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;				// USER-001

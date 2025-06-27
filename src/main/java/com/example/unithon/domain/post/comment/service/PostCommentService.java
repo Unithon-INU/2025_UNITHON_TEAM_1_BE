@@ -1,6 +1,7 @@
 package com.example.unithon.domain.post.comment.service;
 
 import com.example.unithon.domain.member.entity.Member;
+import com.example.unithon.domain.notification.service.NotificationService;
 import com.example.unithon.domain.post.comment.dto.req.PostCommentCreateReqDto;
 import com.example.unithon.domain.post.comment.dto.req.PostCommentUpdateReqDto;
 import com.example.unithon.domain.post.comment.dto.res.PostCommentCreateResDto;
@@ -26,6 +27,7 @@ public class PostCommentService {
 
     private final PostCommentRepository postCommentRepository;
     private final PostRepository postRepository;
+    private final NotificationService notificationService; // 알림 서비스 추가
 
     // 댓글 생성
     @Transactional
@@ -62,6 +64,15 @@ public class PostCommentService {
 
         // 게시글의 댓글 수 증가
         post.increaseCommentCount();
+
+        // 알림 생성
+        if (parent == null) {
+            // 일반 댓글인 경우: 게시글 작성자에게 알림
+            notificationService.createPostCommentNotification(post, comment);
+        } else {
+            // 답댓글인 경우: 부모 댓글 작성자에게 알림
+            notificationService.createCommentReplyNotification(parent, comment);
+        }
 
         return PostCommentCreateResDto.from(comment);
     }
@@ -107,6 +118,16 @@ public class PostCommentService {
         int deletedCount = 1; // 삭제할 댓글 자체
         if (comment.isParentComment() && !comment.getChildren().isEmpty()) {
             deletedCount += comment.getChildren().size(); // 답댓글들도 포함
+        }
+
+        // 알림 삭제
+        notificationService.deleteNotificationsByComment(commentId);
+
+        // 답댓글들의 알림도 삭제
+        if (comment.isParentComment() && !comment.getChildren().isEmpty()) {
+            for (PostComment child : comment.getChildren()) {
+                notificationService.deleteNotificationsByComment(child.getId());
+            }
         }
 
         postCommentRepository.delete(comment);

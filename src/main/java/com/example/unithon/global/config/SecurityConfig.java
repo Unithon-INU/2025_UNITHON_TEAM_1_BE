@@ -79,6 +79,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/jobs/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/jobs/**").hasRole("ADMIN")
 
+                        // 알림 - 모든 작업에 인증 필요
+                        .requestMatchers("/api/notifications/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
 
