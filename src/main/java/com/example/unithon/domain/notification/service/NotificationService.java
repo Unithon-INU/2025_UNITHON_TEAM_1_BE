@@ -32,7 +32,7 @@ public class NotificationService {
             return;
         }
 
-        String message = String.format("%s님이 회원님의 게시글 '%s'에 댓글을 달았습니다.",
+        String message = String.format("%s commented on your post '%s'",
                 comment.getMember().getNickname(),
                 truncateTitle(post.getTitle()));
 
@@ -57,7 +57,7 @@ public class NotificationService {
             return;
         }
 
-        String message = String.format("%s님이 회원님의 댓글에 답글을 달았습니다.",
+        String message = String.format("%s replied to your comment",
                 reply.getMember().getNickname());
 
         Notification notification = Notification.builder()
