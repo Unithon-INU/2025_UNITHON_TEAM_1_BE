@@ -2,6 +2,7 @@ package com.example.unithon.domain.post;
 
 import com.example.unithon.domain.member.Member;
 import com.example.unithon.domain.member.MemberRepository;
+import com.example.unithon.domain.post.comment.repository.PostCommentRepository;
 import com.example.unithon.domain.post.dto.req.PostUpdateReqDto;
 import com.example.unithon.domain.post.dto.req.PostUploadReqDto;
 import com.example.unithon.domain.post.dto.res.PostGetResDto;
@@ -26,6 +27,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final PostLikeRepository postLikeRepository;
+    private final PostCommentRepository postCommentRepository;
 
     // 게시글 업로드
     @Transactional
@@ -64,12 +66,14 @@ public class PostService {
             throw new CustomException(ErrorCode.FORBIDDEN_PERMISSION);
         }
 
-        // 연관된 좋아요 먼저 삭제
+        // 게시글의 모든 댓글 삭제 (답댓글도 CASCADE로 함께 삭제)
+        postCommentRepository.deleteAllByPost(post);
+
+        // 게시글 좋아요 삭제
         postLikeRepository.deleteAllByPost(post);
 
         // 게시글 삭제
         postRepository.delete(post);
-        log.info("[게시글 삭제] postId: {}, memberId: {}", postId, currentMember.getId());
     }
 
     // 개별 게시글 조회
