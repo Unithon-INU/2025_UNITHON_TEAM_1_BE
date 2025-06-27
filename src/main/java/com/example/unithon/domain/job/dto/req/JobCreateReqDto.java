@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class JobCreateReqDto {
 
@@ -52,12 +54,12 @@ public class JobCreateReqDto {
     private String description;
 
     @NotBlank(message = "담당 업무를 입력해주세요.")
-    @Schema(example = "Lead campus tours for prospective students and visitors...")
-    private String responsibilities;
+    @Schema(example = "[\"Lead campus tours for prospective students and visitors\", \"Assist with campus events\"]")
+    private List<String> responsibilities;
 
     @NotBlank(message = "지원 자격을 입력해주세요.")
-    @Schema(example = "Current INU student (undergraduate or graduate)...")
-    private String requirements;
+    @Schema(example = "[\"Current INU student (undergraduate or graduate)\", \"Excellent communication skills\"]")
+    private List<String> requirements;
 
     @Schema(example = "International Affairs Office")
     private String contactPerson;
