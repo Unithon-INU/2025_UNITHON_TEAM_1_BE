@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 @Getter
 public class PostCommentResDto {
     private final Long id;
+    private final Long memberId; // 댓글 작성자 ID
     private final String nickname;
     private final String content;
     private final LocalDateTime createdAt;
@@ -19,10 +20,11 @@ public class PostCommentResDto {
     private final List<PostCommentResDto> replies;
 
     @Builder
-    private PostCommentResDto(Long id, String nickname, String content,
+    private PostCommentResDto(Long id, Long memberId, String nickname, String content,
                               LocalDateTime createdAt, boolean isReply,
                               Long parentId, List<PostCommentResDto> replies) {
         this.id = id;
+        this.memberId = memberId;
         this.nickname = nickname;
         this.content = content;
         this.createdAt = createdAt;
@@ -34,6 +36,7 @@ public class PostCommentResDto {
     public static PostCommentResDto from(PostComment comment) {
         return PostCommentResDto.builder()
                 .id(comment.getId())
+                .memberId(comment.getMember().getId())
                 .nickname(comment.getMember().getNickname())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
@@ -49,6 +52,7 @@ public class PostCommentResDto {
     public static PostCommentResDto fromSimple(PostComment comment) {
         return PostCommentResDto.builder()
                 .id(comment.getId())
+                .memberId(comment.getMember().getId()) // 댓글 작성자 ID 추가
                 .nickname(comment.getMember().getNickname())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())

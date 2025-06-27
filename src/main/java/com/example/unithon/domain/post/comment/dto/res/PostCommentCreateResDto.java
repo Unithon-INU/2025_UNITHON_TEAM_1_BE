@@ -7,12 +7,14 @@ import lombok.Getter;
 @Getter
 public class PostCommentCreateResDto {
     private final Long id;
+    private final Long memberId;
     private final String content;
     private final boolean isReply;
 
     @Builder
-    private PostCommentCreateResDto(Long id, String content, boolean isReply) {
+    private PostCommentCreateResDto(Long id, Long memberId, String content, boolean isReply) {
         this.id = id;
+        this.memberId = memberId;
         this.content = content;
         this.isReply = isReply;
     }
@@ -20,6 +22,7 @@ public class PostCommentCreateResDto {
     public static PostCommentCreateResDto from(PostComment comment) {
         return PostCommentCreateResDto.builder()
                 .id(comment.getId())
+                .memberId(comment.getMember().getId())
                 .content(comment.getContent())
                 .isReply(comment.isReply())
                 .build();
