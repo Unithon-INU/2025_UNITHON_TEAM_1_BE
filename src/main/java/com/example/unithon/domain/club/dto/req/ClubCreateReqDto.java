@@ -17,6 +17,9 @@ public class ClubCreateReqDto {
     @Schema(example = "INUO")
     private String name;
 
+    @Schema(example = "17-304")
+    private String location;
+
     @NotBlank(message = "동아리 요약을 입력해주세요.")
     @Schema(example = "Orchestra Club - Experience classical music and orchestral performances with fellow musicians.")
     private String summary;

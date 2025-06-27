@@ -40,6 +40,7 @@ public class ClubService {
         Club club = Club.builder()
                 .division(createRequest.getDivision())
                 .name(createRequest.getName())
+                .location(createRequest.getLocation())
                 .summary(createRequest.getSummary())
                 .description(createRequest.getDescription())
                 .build();
@@ -65,6 +66,7 @@ public class ClubService {
         club.updateClub(
                 updateRequest.getDivision(),
                 updateRequest.getName(),
+                updateRequest.getLocation(),
                 updateRequest.getSummary(),
                 updateRequest.getDescription()
         );

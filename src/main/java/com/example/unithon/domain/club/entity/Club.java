@@ -23,6 +23,9 @@ public class Club extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column(nullable = true)
+    private String location;
+
     @Column(nullable = false, length = 200)
     private String summary;
 
@@ -30,16 +33,18 @@ public class Club extends BaseEntity {
     private String description;
 
     @Builder
-    private Club(Division division, String name, String summary, String description) {
+    private Club(Division division, String name, String location,String summary, String description) {
         this.division = division;
         this.name = name;
+        this.location = location;
         this.summary = summary;
         this.description = description;
     }
 
-    public void updateClub(Division division, String name, String summary, String description) {
+    public void updateClub(Division division, String name, String location,String summary, String description) {
         this.division = division;
         this.name = name;
+        this.location = location;
         this.summary = summary;
         this.description = description;
     }
