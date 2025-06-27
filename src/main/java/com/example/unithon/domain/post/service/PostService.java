@@ -1,4 +1,4 @@
-package com.example.unithon.domain.post;
+package com.example.unithon.domain.post.service;
 
 import com.example.unithon.domain.member.Member;
 import com.example.unithon.domain.member.MemberRepository;
@@ -8,6 +8,7 @@ import com.example.unithon.domain.post.dto.req.PostUploadReqDto;
 import com.example.unithon.domain.post.dto.res.PostGetResDto;
 import com.example.unithon.domain.post.dto.res.PostUploadResDto;
 import com.example.unithon.domain.post.entity.Post;
+import com.example.unithon.domain.post.Category;
 import com.example.unithon.domain.post.repository.PostRepository;
 import com.example.unithon.domain.postLike.repository.PostLikeRepository;
 import com.example.unithon.global.exception.CustomException;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,15 +30,23 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final PostLikeRepository postLikeRepository;
     private final PostCommentRepository postCommentRepository;
+    private final PostImageService postImageService;
 
-    // 게시글 업로드
+    // 게시글 업로드 (이미지 포함)
     @Transactional
-    public PostUploadResDto uploadPost(Member member, PostUploadReqDto uploadRequest) {
+    public PostUploadResDto uploadPost(Member member, PostUploadReqDto uploadRequest, MultipartFile image) {
+        // 이미지 업로드
+        String imageUrl = null;
+        if (image != null && !image.isEmpty()) {
+            imageUrl = postImageService.uploadImage(image);
+        }
+
         Post post = Post.builder()
                 .member(member)
                 .category(uploadRequest.getCategory())
                 .title(uploadRequest.getTitle())
                 .content(uploadRequest.getContent())
+                .imageUrl(imageUrl)
                 .build();
 
         postRepository.save(post);
@@ -45,7 +55,7 @@ public class PostService {
 
     // 게시글 수정
     @Transactional
-    public void updatePost(Long postId, Member currentMember, PostUpdateReqDto updateRequest) {
+    public void updatePost(Long postId, Member currentMember, PostUpdateReqDto updateRequest, MultipartFile image) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
 
@@ -53,7 +63,20 @@ public class PostService {
             throw new CustomException(ErrorCode.FORBIDDEN_PERMISSION);
         }
 
-        post.updatePost(updateRequest.getCategory(), updateRequest.getTitle(), updateRequest.getContent());
+        String imageUrl = post.getImageUrl();
+
+        // 새 이미지가 업로드된 경우
+        if (image != null && !image.isEmpty()) {
+            // 기존 이미지 삭제
+            if (imageUrl != null) {
+                postImageService.deleteImage(imageUrl);
+            }
+            // 새 이미지 업로드
+            imageUrl = postImageService.uploadImage(image);
+        }
+
+        post.updatePost(updateRequest.getCategory(), updateRequest.getTitle(),
+                updateRequest.getContent(), imageUrl);
     }
 
     // 게시글 삭제
@@ -66,7 +89,12 @@ public class PostService {
             throw new CustomException(ErrorCode.FORBIDDEN_PERMISSION);
         }
 
-        // 게시글의 모든 댓글 삭제 (답댓글도 CASCADE로 함께 삭제)
+        // S3에서 이미지 삭제
+        if (post.getImageUrl() != null) {
+            postImageService.deleteImage(post.getImageUrl());
+        }
+
+        // 게시글의 모든 댓글 삭제
         postCommentRepository.deleteAllByPost(post);
 
         // 게시글 좋아요 삭제

@@ -37,12 +37,17 @@ public class Post extends BaseEntity {
     @Column(nullable = false)
     private Integer commentCount = 0;
 
+    // 이미지 URL 필드 추가
+    @Column(length = 500)
+    private String imageUrl;
+
     @Builder
-    private Post(Member member, Category category, String title, String content) {
+    private Post(Member member, Category category, String title, String content, String imageUrl) {
         this.member = member;
         this.category = category;
         this.title = title;
         this.content = content;
+        this.imageUrl = imageUrl;
         // likeCount, commentCount, createdAt는 자동 설정
     }
 
@@ -66,9 +71,10 @@ public class Post extends BaseEntity {
         }
     }
 
-    public void updatePost(Category category, String title, String content) {
+    public void updatePost(Category category, String title, String content, String imageUrl) {
         this.category = category;
         this.title = title;
         this.content = content;
+        this.imageUrl = imageUrl;
     }
 }

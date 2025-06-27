@@ -14,19 +14,21 @@ public class PostGetResDto {
     private final Category category;
     private final String title;
     private final String content;
+    private final String imageUrl;
     private final Integer likeCount;
     private final Integer commentCount;
     private final LocalDateTime createdAt;
 
     @Builder
     private PostGetResDto(Long id, String nickname, Category category,
-                          String title, String content, Integer likeCount,
-                          Integer commentCount, LocalDateTime createdAt) {
+                          String title, String content, String imageUrl,
+                          Integer likeCount, Integer commentCount, LocalDateTime createdAt) {
         this.id = id;
         this.nickname = nickname;
         this.category = category;
         this.title = title;
         this.content = content;
+        this.imageUrl = imageUrl;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
         this.createdAt = createdAt;
@@ -39,6 +41,7 @@ public class PostGetResDto {
                 .category(post.getCategory())
                 .title(post.getTitle())
                 .content(post.getContent())
+                .imageUrl(post.getImageUrl())
                 .likeCount(post.getLikeCount())
                 .commentCount(post.getCommentCount())
                 .createdAt(post.getCreatedAt())

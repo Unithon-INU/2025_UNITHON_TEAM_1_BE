@@ -33,7 +33,12 @@ public enum ErrorCode {
     COMMENT_NOT_FOUND(NOT_FOUND, "COMMENT-001", "존재하지 않는 댓글입니다."),
     COMMENT_ACCESS_DENIED(FORBIDDEN, "COMMENT-002", "댓글에 대한 권한이 없습니다."),
     INVALID_COMMENT_DEPTH(BAD_REQUEST, "COMMENT-003", "답댓글의 답댓글은 작성할 수 없습니다."),
-    INVALID_PARENT_COMMENT(BAD_REQUEST, "COMMENT-004", "유효하지 않은 부모 댓글입니다.");
+    INVALID_PARENT_COMMENT(BAD_REQUEST, "COMMENT-004", "유효하지 않은 부모 댓글입니다."),
+
+    // Image 관련 에러
+    INVALID_FILE_FORMAT(BAD_REQUEST, "IMAGE-001", "지원하지 않는 파일 형식입니다."),
+    FILE_SIZE_EXCEEDED(BAD_REQUEST, "IMAGE-002", "파일 크기는 5MB 이하여야 합니다."),
+    IMAGE_UPLOAD_FAILED(INTERNAL_SERVER_ERROR, "IMAGE-003", "이미지 업로드에 실패했습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;				// USER-001
