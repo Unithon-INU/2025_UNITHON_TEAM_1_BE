@@ -17,7 +17,11 @@ public class ClubUpdateReqDto {
     @Schema(example = "INUO")
     private String name;
 
-    @NotBlank(message = "동아리 설명을 입력해주세요.")
+    @NotBlank(message = "동아리 요약을 입력해주세요.")
     @Schema(example = "Orchestra Club - Experience classical music and orchestral performances with fellow musicians.")
+    private String summary;
+
+    @NotBlank(message = "동아리 설명을 입력해주세요.")
+    @Schema(example = "Incheon National University Orchestra (INUO) is an orchestra club at Incheon National University founded in 2016...")
     private String description;
 }

@@ -30,6 +30,7 @@ public class ClubService {
     // 동아리 등록 (ADMIN만 가능)
     @Transactional
     public ClubCreateResDto createClub(Member member, ClubCreateReqDto createRequest) {
+        validateAdminPermission(member);
 
         // 동아리명 중복 확인
         if (clubRepository.existsByName(createRequest.getName())) {
@@ -39,6 +40,7 @@ public class ClubService {
         Club club = Club.builder()
                 .division(createRequest.getDivision())
                 .name(createRequest.getName())
+                .summary(createRequest.getSummary())
                 .description(createRequest.getDescription())
                 .build();
 
@@ -57,10 +59,15 @@ public class ClubService {
         // 동아리명 중복 확인 (현재 동아리 제외)
         if (!club.getName().equals(updateRequest.getName()) &&
                 clubRepository.existsByName(updateRequest.getName())) {
-            throw new CustomException(ErrorCode.CLUB_NOT_FOUND);
+            throw new CustomException(ErrorCode.DUPLICATE_CLUB);
         }
 
-        club.updateClub(updateRequest.getDivision(), updateRequest.getName(), updateRequest.getDescription());
+        club.updateClub(
+                updateRequest.getDivision(),
+                updateRequest.getName(),
+                updateRequest.getSummary(),
+                updateRequest.getDescription()
+        );
     }
 
     // 동아리 삭제 (ADMIN만 가능)

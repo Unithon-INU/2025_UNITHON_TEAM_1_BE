@@ -10,14 +10,15 @@ public class ClubGetResDto {
     private final Long id;
     private final Division division;
     private final String name;
+    private final String summary;
     private final String description;
 
-
     @Builder
-    private ClubGetResDto(Long id, Division division, String name, String description) {
+    private ClubGetResDto(Long id, Division division, String name, String summary, String description) {
         this.id = id;
         this.division = division;
         this.name = name;
+        this.summary = summary;
         this.description = description;
     }
 
@@ -26,6 +27,7 @@ public class ClubGetResDto {
                 .id(club.getId())
                 .division(club.getDivision())
                 .name(club.getName())
+                .summary(club.getSummary())
                 .description(club.getDescription())
                 .build();
     }
