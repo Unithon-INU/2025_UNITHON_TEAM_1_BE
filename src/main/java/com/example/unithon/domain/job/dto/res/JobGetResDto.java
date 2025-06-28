@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 public class JobGetResDto {
@@ -22,15 +21,15 @@ public class JobGetResDto {
     private final String experience;
     private final String language;
     private final String description;
-    private final List<String> responsibilities;
-    private final List<String>  requirements;
+    private final String responsibilities;
+    private final String  requirements;
     private final ContactInfo contact;
     private final LocalDateTime createdAt;
 
     @Builder
     private JobGetResDto(Long id, String title, String company, JobField jobField, String type,
                          String visa, String salary, String location, String schedule, String experience,
-                         String language, String description, List<String>  responsibilities, List<String>  requirements,
+                         String language, String description, String  responsibilities, String  requirements,
                          ContactInfo contact, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;

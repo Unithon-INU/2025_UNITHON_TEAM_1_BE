@@ -6,10 +6,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -56,13 +52,12 @@ public class Job extends BaseEntity {
     private String description;
 
     // Hibernate가 자동으로 JSON 변환을 처리함
-    @Column(nullable = false, columnDefinition = "JSON")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> responsibilities;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String responsibilities;
 
-    @Column(nullable = false, columnDefinition = "JSON")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> requirements;
+    @Column(nullable = false, columnDefinition = "TEXT")
+
+    private String requirements;
 
     @Column(nullable = true, length = 100)
     private String contactPerson;
@@ -76,7 +71,7 @@ public class Job extends BaseEntity {
     @Builder
     private Job(String title, String company, JobField jobField, String type, String visa,
                 String salary, String location, String schedule, String experience, String language,
-                String description, List<String> responsibilities, List<String> requirements,
+                String description, String responsibilities, String requirements,
                 String contactPerson, String contactEmail, String contactPhone) {
         this.title = title;
         this.company = company;
@@ -98,7 +93,7 @@ public class Job extends BaseEntity {
 
     public void updateJob(String title, String company, JobField jobField, String type, String visa,
                           String salary, String location, String schedule, String experience, String language,
-                          String description, List<String> responsibilities, List<String> requirements,
+                          String description, String responsibilities, String requirements,
                           String contactPerson, String contactEmail, String contactPhone) {
         this.title = title;
         this.company = company;
