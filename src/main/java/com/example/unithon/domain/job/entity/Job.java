@@ -47,7 +47,7 @@ public class Job extends BaseEntity {
     @Column(nullable = true, length = 500)
     private String language;
 
-    // 긴 텍스트는 length 대신 TEXT
+    // 긴 텍스트는 length 대신 TEXT 사용
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
