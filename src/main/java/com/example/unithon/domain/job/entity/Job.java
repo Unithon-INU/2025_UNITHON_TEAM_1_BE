@@ -26,22 +26,22 @@ public class Job extends BaseEntity {
     @Column(nullable = false)
     private JobField jobField;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 50)
     private String type;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 200)
     private String visa;
 
     @Column(nullable = false, length = 100)
     private String salary;
 
-    @Column(nullable = false, length = 300)
+    @Column(nullable = false, length = 500)
     private String location;
 
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, length = 500)
     private String schedule;
 
-    @Column(nullable = true, length = 200)
+    @Column(nullable = true, length = 500)
     private String experience;
 
     @Column(nullable = true, length = 500)
@@ -56,7 +56,6 @@ public class Job extends BaseEntity {
     private String responsibilities;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-
     private String requirements;
 
     @Column(nullable = true, length = 100)

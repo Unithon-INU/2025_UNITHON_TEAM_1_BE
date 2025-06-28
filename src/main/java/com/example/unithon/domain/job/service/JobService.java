@@ -79,10 +79,7 @@ public class JobService {
                 updateRequest.getContactPerson(),
                 updateRequest.getContactEmail(),
                 updateRequest.getContactPhone()
-        );
-
-        log.info("[채용 공고 수정 완료] jobId: {}, title: {}", jobId, job.getTitle());
-    }
+        );}
 
     // 채용 공고 삭제 (ADMIN만 가능)
     @Transactional
